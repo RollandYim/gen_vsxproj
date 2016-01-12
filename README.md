@@ -1,5 +1,5 @@
 # gen_vsxproj
-Visual Studio 2010 or newer edtion doesn't have the function keeping folder struct when import from exsited code, this project aims to handle it!
+Visual Studio 2010 or newer edtion doesn't have the function keeping folder struct when importing from exsited code, this project aims to fix it!
 
 DEPENDENCE
 ==========
@@ -8,7 +8,7 @@ This project depends on GuidgenConsole(https://github.com/michaelmcdaniel/Guidge
 INSTALL STEP
 ============
 1. Fetch GuidGen.exe from GuidgenConsole
-2. Put GuidGen.exe where the same directory with gen.py
+2. Put GuidGen.exe in the same directory with gen.py
 3. ./gen.py
 
 USAGE
