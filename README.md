@@ -8,7 +8,7 @@ This project depends on GuidgenConsole(https://github.com/michaelmcdaniel/Guidge
 INSTALL STEP
 ============
 1. Fetch GuidGen.exe from GuidgenConsole
-2. Put GuidGen.exe in the same directory with gen.py
+2. Put GuidGen.exe in the same directory as gen.py
 3. ./gen.py
 
 USAGE
