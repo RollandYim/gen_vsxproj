@@ -306,15 +306,19 @@ def generate_sln(project_name, code_folder, save_path):
     print('generate %s ok' % save_path)
 
 def main(argv):
-    if (len(argv) < 3):
+    if (len(argv) < 2):
         print('Usage %s project_name code_folder save_path' % argv[0])
         sys.exit()
     
     project_name = argv[1]
     code_folder = argv[2]
-    vcx_path = argv[3] + '\\' + project_name + '.vcxproj'
+    if (len(argv) > 3):
+    		dest_folder = argv[3]
+    else:
+    		dest_folder = code_folder
+    vcx_path = dest_folder + '\\' + project_name + '.vcxproj'
     vcx_filter_path = vcx_path + '.filters'
-    sln_path = argv[3] + '\\' + project_name + '.sln'
+    sln_path = dest_folder + '\\' + project_name + '.sln'
     
     if (code_folder[-1] != '\\'):
         code_folder += '\\'
