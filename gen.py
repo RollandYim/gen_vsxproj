@@ -333,7 +333,7 @@ def main(argv):
 
     save_prefix = save_path + '\\' + proj_name;
     vcx_path = save_prefix + '.vcxproj'
-    vcx_filter_path = save_prefix + '.filters'
+    vcx_filter_path = vcx_path + '.filters'
     sln_path = save_prefix + '.sln'
 
     if (code_folder[-1] != '\\'):
