@@ -60,10 +60,10 @@ def generate_vcxproj(project_name, code_folder, save_path):
     global files
 
     file = open(save_path, 'w')
-    
+
     file.write('<?xml version="1.0" encoding="utf-8"?>\r\n')
     file.write('<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">\r\n')
-    
+
     indent_up()
     file.write(indent_fill() + '<ItemGroup Label="ProjectConfigurations">\r\n')
     indent_up()
@@ -82,7 +82,7 @@ def generate_vcxproj(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + '</ItemGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<PropertyGroup Label="Globals">\r\n')
     indent_up()
@@ -92,11 +92,11 @@ def generate_vcxproj(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + '</PropertyGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<PropertyGroup Condition="\'$(Configuration)|$(Platform)\'==\'Debug|Win32\'" Label="Configuration">\r\n')
     indent_up()
@@ -106,7 +106,7 @@ def generate_vcxproj(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + '</PropertyGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<PropertyGroup Condition="\'$(Configuration)|$(Platform)\'==\'Release|Win32\'" Label="Configuration">\r\n')
     indent_up()
@@ -116,13 +116,13 @@ def generate_vcxproj(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + '</PropertyGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />\r\n')
     file.write(indent_fill() + '<ImportGroup Label="ExtensionSettings">\r\n')
     file.write(indent_fill() + '</ImportGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<ImportGroup Label="PropertySheets" Condition="\'$(Configuration)|$(Platform)\'==\'Debug|Win32\'">\r\n')
     indent_up()
@@ -130,7 +130,7 @@ def generate_vcxproj(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + '</ImportGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<ImportGroup Label="PropertySheets" Condition="\'$(Configuration)|$(Platform)\'==\'Release|Win32\'">\r\n')
     indent_up()
@@ -138,11 +138,11 @@ def generate_vcxproj(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + '</ImportGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<PropertyGroup Label="UserMacros" />\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<PropertyGroup Condition="\'$(Configuration)|$(Platform)\'==\'Debug|Win32\'">\r\n')
     indent_up()
@@ -150,7 +150,7 @@ def generate_vcxproj(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + '</PropertyGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<PropertyGroup Condition="\'$(Configuration)|$(Platform)\'==\'Release|Win32\'">\r\n')
     indent_up()
@@ -158,7 +158,7 @@ def generate_vcxproj(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + '</PropertyGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<ItemDefinitionGroup Condition="\'$(Configuration)|$(Platform)\'==\'Debug|Win32\'">\r\n')
     indent_up()
@@ -180,7 +180,7 @@ def generate_vcxproj(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + '</ItemDefinitionGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<ItemDefinitionGroup Condition="\'$(Configuration)|$(Platform)\'==\'Release|Win32\'">\r\n')
     indent_up()
@@ -202,7 +202,7 @@ def generate_vcxproj(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + '</ItemDefinitionGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<ItemGroup>\r\n')
     indent_up()
@@ -213,28 +213,28 @@ def generate_vcxproj(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + '</ItemGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />\r\n')
     file.write(indent_fill() + '<ImportGroup Label="ExtensionTargets">\r\n')
     file.write(indent_fill() + '</ImportGroup>\r\n')
     indent_down()
-    
+
     file.write('</Project>\r\n')
-    
+
     file.close()
-    
+
     print('generate %s ok' % save_path)
 
 def generate_vcxproj_filters(project_name, code_folder, save_path):
     global files
     global folders
-    
+
     file = open(save_path, 'w')
-    
+
     file.write('<?xml version="1.0" encoding="utf-8"?>\r\n')
     file.write('<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">\r\n')
-    
+
     indent_up()
     file.write(indent_fill() + '<ItemGroup>\r\n')
     indent_up()
@@ -245,7 +245,7 @@ def generate_vcxproj_filters(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + '</ItemGroup>\r\n')
     indent_down()
-    
+
     indent_up()
     file.write(indent_fill() + '<ItemGroup>\r\n')
     indent_up()
@@ -262,20 +262,20 @@ def generate_vcxproj_filters(project_name, code_folder, save_path):
     file.write(indent_fill() + '</ItemGroup>\r\n')
     indent_down()
     file.write('</Project>\r\n')
-    
+
     file.close()
-    
+
     print('generate %s ok' % save_path)
 
 def generate_sln(project_name, code_folder, save_path):
     file = open(save_path, 'w')
-    
+
     file.write('Microsoft Visual Studio Solution File, Format Version 11.00\r\n')
     file.write('# Visual Studio 2010\r\n')
     file.write('Project("{' + get_proj_guid() + '}") = "' + project_name + '", "' + project_name + '.vcxproj", "{' + get_vcxproj_guid() + '}"\r\n')
     file.write('EndProject\r\n')
     file.write('Global\r\n')
-    
+
     indent_up()
     file.write(indent_fill() + 'GlobalSection(SolutionConfigurationPlatforms) = preSolution\r\n')
     indent_up()
@@ -298,36 +298,52 @@ def generate_sln(project_name, code_folder, save_path):
     indent_down()
     file.write(indent_fill() + 'EndGlobalSection\r\n')
     indent_down()
-    
+
     file.write('EndGlobal\r\n')
-    
+
     file.close()
-    
+
     print('generate %s ok' % save_path)
 
 def main(argv):
     if (len(argv) < 2):
-        print('Usage %s project_name code_folder save_path' % argv[0])
+        print('Usage %s code_folder [save_path] [project_name]' % argv[0])
         sys.exit()
-    
-    project_name = argv[1]
-    code_folder = argv[2]
-    if (len(argv) > 3):
-    		dest_folder = argv[3]
+
+    code_folder = argv[1]
+    code_folder = code_folder.replace("/", "\\")
+
+    if (len(argv) >= 3):
+        save_path = argv[2]
+        save_path = save_path.replace("/", "\\")
     else:
-    		dest_folder = code_folder
-    vcx_path = dest_folder + '\\' + project_name + '.vcxproj'
-    vcx_filter_path = vcx_path + '.filters'
-    sln_path = dest_folder + '\\' + project_name + '.sln'
-    
+        save_path = code_folder
+
+    if (len(argv) >= 4):
+        proj_name = argv[3]
+    else:
+        proj_name = save_path
+    seglist = proj_name.rsplit("\\")
+    for i in range(len(seglist) - 1, -1, -1):
+        if (seglist[i] != "src"):
+            proj_name = seglist[i]
+            break
+    else:
+        proj_name = "none"
+
+    save_prefix = save_path + '\\' + proj_name;
+    vcx_path = save_prefix + '.vcxproj'
+    vcx_filter_path = save_prefix + '.filters'
+    sln_path = save_prefix + '.sln'
+
     if (code_folder[-1] != '\\'):
         code_folder += '\\'
-    
+
     visit(code_folder)
-    
-    generate_vcxproj(project_name, code_folder, vcx_path)
-    generate_vcxproj_filters(project_name, code_folder, vcx_filter_path)
-    generate_sln(project_name, code_folder, sln_path)
+
+    generate_vcxproj(proj_name, code_folder, vcx_path)
+    generate_vcxproj_filters(proj_name, code_folder, vcx_filter_path)
+    generate_sln(proj_name, code_folder, sln_path)
 
 if __name__ == "__main__":
     main(sys.argv)
