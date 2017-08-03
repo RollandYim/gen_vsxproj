@@ -38,7 +38,8 @@ def indent_down():
     indent -= 2
 
 def gen_GUID():
-    op = subprocess.Popen(['.\\GuidGen.exe', '/u', '/nocopy'], stdout=subprocess.PIPE)
+    curdir = os.path.dirname(os.path.realpath(__file__))
+    op = subprocess.Popen([curdir + '\\GuidGen.exe', '/u', '/nocopy'], stdout=subprocess.PIPE)
     guidstr, _ = op.communicate()
     guidret = str(guidstr)[2:-5]
     print('gen_GUID ' + guidret)
