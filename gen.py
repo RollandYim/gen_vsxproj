@@ -20,16 +20,16 @@ def visit(folder):
     for root, dirnames, filenames in os.walk(folder):
         for d in dirnames:
             full_path = os.path.join(root, d)
-            #print full_path, " is0 ", isinstance(full_path, str)
+            # print full_path, " is0 ", isinstance(full_path, str)
             full_path = unicode(full_path, 'gbk')
-            #print full_path, " is1 ", isinstance(full_path, unicode)
+            # print full_path, " is1 ", isinstance(full_path, unicode)
             if '\\.' not in full_path and '/.' not in full_path:
                 folders.append(full_path)
         for f in filenames:
             full_path = os.path.join(root, f)
-            #print full_path, " file0 ", isinstance(full_path, str)
+            # print full_path, " file0 ", isinstance(full_path, str)
             full_path = unicode(full_path, 'gbk')
-            #print full_path, " file1 ", isinstance(full_path, unicode)
+            # print full_path, " file1 ", isinstance(full_path, unicode)
             isinstance(full_path, str)
             _, ext = os.path.splitext(f)
             if ext in c_include_exts:
@@ -62,6 +62,12 @@ def indent_up():
 def indent_down():
     global indent
     indent -= 2
+
+
+def remove_prefix(string, prefix):
+    if string.startswith(prefix):
+        return string[len(prefix):]
+    return string
 
 
 def gen_GUID():
@@ -247,7 +253,7 @@ def generate_vcxproj(project_name, code_folder, save_path):
     file.write(indent_fill() + '<ItemGroup>\r\n')
     indent_up()
     for fn in include_files:
-        rel_fn = fn.lstrip(code_folder)
+        rel_fn = remove_prefix(fn, code_folder)
         file.write(indent_fill() + '<ClInclude Include="' + rel_fn.encode("utf-8") + '"/>\r\n')
     indent_down()
     file.write(indent_fill() + '</ItemGroup>\r\n')
@@ -257,7 +263,7 @@ def generate_vcxproj(project_name, code_folder, save_path):
     file.write(indent_fill() + '<ItemGroup>\r\n')
     indent_up()
     for fn in source_files:
-        rel_fn = fn.lstrip(code_folder)
+        rel_fn = remove_prefix(fn, code_folder)
         file.write(indent_fill() + '<ClCompile Include="' + rel_fn.encode("utf-8") + '"/>\r\n')
     indent_down()
     file.write(indent_fill() + '</ItemGroup>\r\n')
@@ -288,7 +294,7 @@ def generate_vcxproj_filters(project_name, code_folder, save_path):
     file.write(indent_fill() + '<ItemGroup>\r\n')
     indent_up()
     for fn in folders:
-        rel_fn = fn.lstrip(code_folder)
+        rel_fn = remove_prefix(fn, code_folder)
         if rel_fn != "":
             file.write(indent_fill() + '  <Filter Include="' + rel_fn.encode("utf-8") + '"/>\r\n')
     indent_down()
@@ -299,7 +305,7 @@ def generate_vcxproj_filters(project_name, code_folder, save_path):
     file.write(indent_fill() + '<ItemGroup>\r\n')
     indent_up()
     for fn in include_files:
-        rel_fn = fn.lstrip(code_folder)
+        rel_fn = remove_prefix(fn, code_folder)
         rel_dir = os.path.dirname(rel_fn)
         file.write(indent_fill() + '<ClInclude Include="' + rel_fn.encode("utf-8") + '">\r\n')
         if rel_fn != "":
@@ -313,7 +319,7 @@ def generate_vcxproj_filters(project_name, code_folder, save_path):
     file.write(indent_fill() + '<ItemGroup>\r\n')
     indent_up()
     for fn in source_files:
-        rel_fn = fn.lstrip(code_folder)
+        rel_fn = remove_prefix(fn, code_folder)
         rel_dir = os.path.dirname(rel_fn)
         file.write(indent_fill() + '<ClCompile Include="' + rel_fn.encode("utf-8") + '">\r\n')
         if rel_fn != "":
@@ -371,30 +377,25 @@ def generate_sln(project_name, code_folder, save_path):
 
 
 def main(argv):
-    if (len(argv) < 2):
-        print('Usage %s code_folder [save_path] [project_name]' % argv[0])
-        sys.exit()
+    code_folder = ""
+    save_path = ""
+    proj_name = ""
 
-    code_folder = argv[1]
-    code_folder = code_folder.replace("/", "\\")
+    argv_len = len(argv)
+    if argv_len == 1:
+        code_folder = os.getcwd()
+    if argv_len >= 2:
+        code_folder = argv[1].replace("/", "\\")
 
     if (len(argv) >= 3):
-        save_path = argv[2]
-        save_path = save_path.replace("/", "\\")
+        save_path = argv[2].replace("/", "\\")
     else:
         save_path = code_folder
 
     if (len(argv) >= 4):
-        proj_name = argv[3]
+        proj_name = argv[3].replace("/", "\\")
     else:
-        proj_name = save_path
-    seglist = proj_name.rsplit("\\")
-    for i in range(len(seglist) - 1, -1, -1):
-        if (seglist[i] != "src"):
-            proj_name = seglist[i]
-            break
-    else:
-        proj_name = "none"
+        proj_name = os.path.split(save_path)[-1]
 
     save_prefix = save_path + '\\' + proj_name;
     vcx_path = save_prefix + '.vcxproj'
