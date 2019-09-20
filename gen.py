@@ -11,6 +11,8 @@ import os
 import subprocess
 import sys
 
+from arg_parser import g_arg_parser
+
 c_include_exts = ['.h', '.hpp', '.hxx']
 c_source_exts = ['.c', '.cpp', '.cc', '.cxx', '.inl', '.inc']
 
@@ -23,14 +25,19 @@ def visit(folder):
             # print full_path, " is0 ", isinstance(full_path, str)
             full_path = unicode(full_path, 'gbk')
             # print full_path, " is1 ", isinstance(full_path, unicode)
-            if '\\.' not in full_path and '/.' not in full_path:
-                folders.append(full_path)
+            if '\\.' in full_path or '/.' in full_path:
+                continue
+            if not g_arg_parser.is_folder_included(full_path):
+                continue
+            folders.append(full_path)
         for f in filenames:
             full_path = os.path.join(root, f)
             # print full_path, " file0 ", isinstance(full_path, str)
             full_path = unicode(full_path, 'gbk')
             # print full_path, " file1 ", isinstance(full_path, unicode)
             isinstance(full_path, str)
+            if not g_arg_parser.is_folder_included(full_path):
+                continue
             _, ext = os.path.splitext(f)
             if ext in c_include_exts:
                 include_files.append(full_path)
@@ -377,39 +384,30 @@ def generate_sln(project_name, code_folder, save_path):
 
 
 def main(argv):
-    code_folder = ""
-    save_path = ""
-    proj_name = ""
+    cur_dir = os.getcwd()
 
-    argv_len = len(argv)
-    if argv_len == 1:
-        code_folder = os.getcwd()
-    if argv_len >= 2:
-        code_folder = argv[1].replace("/", "\\")
+    g_arg_parser.parse_args(cur_dir)
+    if g_arg_parser.need_show_help:
+        g_arg_parser.show_help()
+        exit(1)
 
-    if (len(argv) >= 3):
-        save_path = argv[2].replace("/", "\\")
-    else:
-        save_path = code_folder
+    print g_arg_parser.dump_args()
 
-    if (len(argv) >= 4):
-        proj_name = argv[3].replace("/", "\\")
-    else:
-        proj_name = os.path.split(save_path)[-1]
-
-    save_prefix = save_path + '\\' + proj_name;
-    vcx_path = save_prefix + '.vcxproj'
+    vcx_path = g_arg_parser.solution_path + '.vcxproj'
     vcx_filter_path = vcx_path + '.filters'
-    sln_path = save_prefix + '.sln'
+    sln_path = g_arg_parser.solution_path + '.sln'
 
-    if (code_folder[-1] != '\\'):
-        code_folder += '\\'
+    code_root = g_arg_parser.code_root
+    if not code_root.endswith("\\"):
+        code_root += "\\"
 
-    visit(code_folder)
+    visit(code_root)
 
-    generate_vcxproj(proj_name, code_folder, vcx_path)
-    generate_vcxproj_filters(proj_name, code_folder, vcx_filter_path)
-    generate_sln(proj_name, code_folder, sln_path)
+    solution_name = g_arg_parser.get_solution_name("none")
+
+    generate_vcxproj(solution_name, code_root, vcx_path)
+    generate_vcxproj_filters(solution_name, code_root, vcx_filter_path)
+    generate_sln(solution_name, code_root, sln_path)
 
 
 if __name__ == "__main__":
