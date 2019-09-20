@@ -28,6 +28,7 @@ def visit(folder):
             if '\\.' in full_path or '/.' in full_path:
                 continue
             if not g_arg_parser.is_folder_included(full_path):
+                #print("ignore full_path", full_path)
                 continue
             folders.append(full_path)
         for f in filenames:
@@ -37,6 +38,7 @@ def visit(folder):
             # print full_path, " file1 ", isinstance(full_path, unicode)
             isinstance(full_path, str)
             if not g_arg_parser.is_folder_included(full_path):
+                #print("ignore full_path", full_path)
                 continue
             _, ext = os.path.splitext(f)
             if ext in c_include_exts:

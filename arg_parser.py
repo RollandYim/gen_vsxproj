@@ -36,21 +36,22 @@ class ArgParser:
         cls.code_root = option.code_root
         if len(cls.code_root) == 0:
             cls.code_root = cur_dir
-        cls.code_root.replace("/", "\\")
+        cls.code_root = cls.code_root.replace("/", "\\")
 
         cls.solution_path = option.solution_path
         if len(cls.solution_path) == 0:
             cls.solution_path = cur_dir
-        cls.solution_path.replace("/", "\\")
+        cls.solution_path = cls.solution_path.replace("/", "\\")
 
         cls._include_folder_list = list()
         cls.include_folders = option.include_folders
         for f in cls.include_folders.split(","):
             f = os.path.join(cls.code_root, f)
+            f = f.replace("/", "\\")
             cls._include_folder_list.append(f)
 
         if hasattr(option, "help"):
-            need_show_help = option.help
+            cls.need_show_help = option.help
 
     @classmethod
     def show_help(cls):
@@ -80,7 +81,7 @@ class ArgParser:
         if len(cls._include_folder_list) == 0:
             return True
         for f in cls._include_folder_list:
-            if folder.startswith(f):
+            if folder.startswith(f) or f.startswith(folder):
                 return True
         return False
 
