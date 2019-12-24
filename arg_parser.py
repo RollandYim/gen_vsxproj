@@ -67,13 +67,15 @@ class ArgParser:
                + "  solution_path: " + cls.solution_path + ",\n" \
                + "  include_folders: " + cls.include_folders + ",\n" \
                + "  _include_folder_list: " + ','.join(cls._include_folder_list) + ",\n" \
+               + "  get_solution_name: " + cls.get_solution_name("") + ",\n" \
                + "}"
 
     @classmethod
     def get_solution_name(cls, def_name):
-        pos = cls.solution_path.rfind("\\")
+        solu_path = cls.solution_path.rstrip("\\").rstrip("/")
+        pos = solu_path.rfind("\\")
         if pos >= 0:
-            return cls.solution_path[pos + 1:]
+            return solu_path[pos + 1:]
         return def_name
 
     @classmethod

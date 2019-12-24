@@ -395,17 +395,19 @@ def main(argv):
 
     print g_arg_parser.dump_args()
 
-    vcx_path = g_arg_parser.solution_path + '.vcxproj'
+    solution_name = g_arg_parser.get_solution_name("none")
+
+    vcx_path = os.path.join(g_arg_parser.solution_path, solution_name + '.vcxproj')
     vcx_filter_path = vcx_path + '.filters'
-    sln_path = g_arg_parser.solution_path + '.sln'
+    sln_path = os.path.join(g_arg_parser.solution_path, solution_name + '.sln')
+
+    print("vcx_path={}\n vcx_filter_path={}\n sln_path={}\n".format(vcx_path, vcx_filter_path, sln_path))
 
     code_root = g_arg_parser.code_root
     if not code_root.endswith("\\"):
         code_root += "\\"
 
     visit(code_root)
-
-    solution_name = g_arg_parser.get_solution_name("none")
 
     generate_vcxproj(solution_name, code_root, vcx_path)
     generate_vcxproj_filters(solution_name, code_root, vcx_filter_path)
